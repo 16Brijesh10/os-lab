@@ -1,14 +1,13 @@
 #include<stdio.h>
 #include<conio.h>
 #include<math.h>
-using namespace std;
 
 int main()
 {
     int i, j, sum = 0, c = 0, n, start, temp, t, current;
     int requests[20], order[20], sorted[20];
 
-	clrscr();
+	//clrscr();
 
     do
     {
