@@ -1,79 +1,66 @@
-#include<stdio.h>
-#include<conio.h>
-#include<math.h>
+#include <stdio.h>
+#include <math.h>
 
-int main()
+int main(void)
 {
-    int i, j, sum = 0, c = 0, n, start, temp, t, current;
-    int requests[20], order[20], sorted[20];
+clrscr();
+int i, j, sum = 0, c = 0, n, st, temp;
+int a[20], b[20], dd[20];
+do {
+    printf("Enter the block number between 0 and 200: ");
+    scanf("%d", &st);
+} while (st >= 200 || st < 0);
 
-	//clrscr();
+printf("Our disk head is on the %d block\n", st);
+a[0] = st;
 
-    do
-    {
-        printf("Enter the block number between 0 and 200: ");
-        scanf("%d", &start);
-    } while ((start >= 200) || (start < 0));
+printf("Enter the number of requests: ");
+scanf("%d", &n);
 
-    printf("Our disk head is on the %d block", start);
-    requests[0] = start;
-
-    printf("Enter the number of requests: ");
-    scanf("%d", &n);
-
-    printf("Enter requests: ");
-    for (i = 1; i <= n; i++)
-    {
-        printf("Enter %d request: ", i);
-        scanf("%d", &requests[i]);
-        do
-        {
-            if ((requests[i] > 200) || (requests[i] < 0))
-            {
-                printf("Block number must be between 0 and 200!");
-            }
-        } while ((requests[i] > 200) || (requests[i] < 0));
+printf("Enter requests: ");
+for (i = 1; i <= n; i++) {
+    printf("Enter request %d: ", i);
+    scanf("%d", &a[i]);
+    while (a[i] >= 200 || a[i] < 0) {
+        printf("Block number must be between 0 and 200!\n");
+        printf("Enter request %d: ", i);
+        scanf("%d", &a[i]);
     }
+}
 
-    for (i = 0; i <= n; i++)
-        sorted[i] = requests[i];
+for (i = 0; i <= n; i++)
+    dd[i] = a[i];
 
-    current = requests[0];
-    for (i = 0; i <= n; i++)
-        for (j = i + 1; j <= n; j++)
-            if (sorted[i] > sorted[j])
-            {
-                temp = sorted[i];
-                sorted[i] = sorted[j];
-                sorted[j] = temp;
-            }
-
-    for (i = 0; i <= n; i++)
-    {
-        if (current == sorted[i])
-        {
-            order[c] = start;
-            for (j = i + 1; j <= n; j++)
-                order[++c] = sorted[j];
-            for (j = i - 1; j >= 0; j--)
-                order[++c] = sorted[j];
+int s = a[0];
+for (i = 0; i <= n; i++)
+    for (j = i + 1; j <= n; j++)
+        if (dd[i] > dd[j]) {
+            temp = dd[i];
+            dd[i] = dd[j];
+            dd[j] = temp;
         }
+
+for (i = 0; i <= n; i++) {
+    if (s == dd[i]) {
+        b[c] = st;
+        for (j = i + 1; j <= n; j++)
+            b[++c] = dd[j];
+        for (j = i - 1; j >= 0; j--)
+            b[++c] = dd[j];
     }
+}
 
-    printf("\n\t\tLOOK TECHNIQUE: ");
-    printf("\nDISK QUEUE:");
-    for (i = 0; i <= n; i++)
-        printf("\t%d", requests[i]);
-
-    printf("\n\nACCESS ORDER:");
-    for (i = 0; i <= c; i++)
-    {
-        printf("\t%d", order[i]);
-        if (i != c)
-            sum += abs(order[i] - order[i + 1]);
-    }
-
-    printf("\n\nTotal number of head movements: %d", sum);
-    return 0;
-    getch();
+printf("\nLOOK TECHNIQUE:\n");
+printf("DISK QUEUE:\t");
+for (i = 0; i <= n; i++)
+    printf("%d\t", a[i]);
+printf("\nACCESS ORDER:\t");
+for (i = 0; i <= c; i++) {
+    printf("%d\t", b[i]);
+    if (i != c)
+        sum += abs(b[i] - b[i + 1]);
+}
+printf("\n\nTotal head movements: %d\n", sum);
+getch();
+return 0;
 }
